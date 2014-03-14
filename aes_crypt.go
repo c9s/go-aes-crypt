@@ -141,8 +141,7 @@ func Decrypt(message []byte, key []byte) ([]byte, error) {
 	if bytes.Compare(hmac, hmac2) != 0 {
 		return []byte{}, errors.New("Unmatched hmac")
 	}
-
-	plaintext := make([]byte, 256)
+	plaintext := make([]byte, len(em))
 	stream := cipher.NewCTR(block, iv)
 	stream.XORKeyStream(plaintext, em)
 	return plaintext, nil
