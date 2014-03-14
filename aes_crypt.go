@@ -1,4 +1,4 @@
-package aes_cryptor
+package aescrypt
 
 /*
 
