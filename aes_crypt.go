@@ -7,7 +7,7 @@ Usage:
 
 	func main() {
 		key := []byte("example key 1234")
-		cryptor := NewAESCryptor(key, 16)
+		cryptor := NewAESCrypt(key, 16)
 		msg := cryptor.EncryptStringToBase64String("plain text")
 		fmt.Println(msg)
 		decrypted, err := cryptor.DecryptBase64StringToString(msg)
@@ -31,30 +31,30 @@ import (
 	"io"
 )
 
-type AESCryptor struct {
+type AESCrypt struct {
 	Key    []byte
 	IVSize int // bytes
 }
 
-func NewAESCryptor(key []byte, size int) *AESCryptor {
-	return &AESCryptor{Key: key, IVSize: size}
+func NewAESCrypt(key []byte, size int) *AESCrypt {
+	return &AESCrypt{Key: key, IVSize: size}
 }
 
-func (self *AESCryptor) Encrypt(plaintext []byte) []byte {
+func (self *AESCrypt) Encrypt(plaintext []byte) []byte {
 	return Encrypt(plaintext, self.Key)
 }
 
 /*
 Encrypt bytes to base64 string
 */
-func (self *AESCryptor) EncryptToBase64String(plaintext []byte) string {
+func (self *AESCrypt) EncryptToBase64String(plaintext []byte) string {
 	return base64.StdEncoding.EncodeToString(Encrypt(plaintext, self.Key))
 }
 
 /**
 Decrypt base64string to bytes
 */
-func (self *AESCryptor) DecryptBase64String(base64string string) ([]byte, error) {
+func (self *AESCrypt) DecryptBase64String(base64string string) ([]byte, error) {
 	msg, err := base64.StdEncoding.DecodeString(base64string)
 	if err != nil {
 		return []byte{}, err
@@ -70,14 +70,14 @@ func (self *AESCryptor) DecryptBase64String(base64string string) ([]byte, error)
 /*
 Encrypt bytes to base64 string
 */
-func (self *AESCryptor) EncryptStringToBase64String(plaintext string) string {
+func (self *AESCrypt) EncryptStringToBase64String(plaintext string) string {
 	return base64.StdEncoding.EncodeToString(Encrypt([]byte(plaintext), self.Key))
 }
 
 /**
 Decrypt base64string to bytes
 */
-func (self *AESCryptor) DecryptBase64StringToString(base64string string) (string, error) {
+func (self *AESCrypt) DecryptBase64StringToString(base64string string) (string, error) {
 	msg, err := base64.StdEncoding.DecodeString(base64string)
 	if err != nil {
 		return "", err
@@ -89,7 +89,7 @@ func (self *AESCryptor) DecryptBase64StringToString(base64string string) (string
 	return string(decrypted), nil
 }
 
-func (self *AESCryptor) Decrypt(message []byte) ([]byte, error) {
+func (self *AESCrypt) Decrypt(message []byte) ([]byte, error) {
 	b, err := Decrypt(message, self.Key)
 	if err != nil {
 		return []byte{}, err
