@@ -1,5 +1,6 @@
 # Simple AES Encryption library for Go
 
+
 ```go
 import aes "github.com/c9s/go-aes-crypt"
 func main() {
@@ -14,3 +15,7 @@ func main() {
     fmt.Println(decrypted)
 }
 ```
+
+## Install
+
+    go get -x github.com/c9s/go-aes-crypt
